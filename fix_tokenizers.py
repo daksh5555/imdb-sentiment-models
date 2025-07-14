@@ -1,13 +1,18 @@
-# fix_tokenizers.py
-import joblib
+# fix_tokenizers_json.py
+import json
+from tensorflow.keras.preprocessing.text import tokenizer_from_json
 from tensorflow.keras.preprocessing.text import Tokenizer
+import joblib
 
-# Load old tokenizer (may fail if incompatible)
-old_tokenizer_50k = joblib.load("tokenizer_50k.pkl")
-old_tokenizer_255k = joblib.load("tokenizer_255k.pkl")
+# Load your existing tokenizers
+tokenizer_a = joblib.load("tokenizer_50k.pkl")
+tokenizer_b = joblib.load("tokenizer_255k.pkl")
 
-# Re-save using correct Tokenizer class
-joblib.dump(old_tokenizer_50k, "tokenizer_50k.pkl")
-joblib.dump(old_tokenizer_255k, "tokenizer_255k.pkl")
+# Save as JSON (portable)
+with open("tokenizer_50k.json", "w") as f:
+    f.write(tokenizer_a.to_json())
 
-print("✅ Tokenizers re-saved successfully.")
+with open("tokenizer_255k.json", "w") as f:
+    f.write(tokenizer_b.to_json())
+
+print("✅ Saved tokenizers as JSON for portability.")

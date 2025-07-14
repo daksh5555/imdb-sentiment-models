@@ -2,6 +2,8 @@ import streamlit as st
 import joblib
 from model_architectures import build_model_small, build_model_large
 from tensorflow.keras.preprocessing.text import Tokenizer  # Ensure this is imported
+import json
+from tensorflow.keras.preprocessing.text import tokenizer_from_json
 
 # Register Tokenizer by creating a dummy instance (needed for joblib unpickling)
 _ = Tokenizer()
@@ -20,8 +22,13 @@ def load_model_b():
 
 @st.cache_resource
 def load_tokenizer_a():
-    return joblib.load("tokenizer_50k.pkl")
+    with open("tokenizer_50k.json") as f:
+        data = json.load(f)
+    return tokenizer_from_json(data)
 
 @st.cache_resource
 def load_tokenizer_b():
-    return joblib.load("tokenizer_255k.pkl")
+    with open("tokenizer_255k.json") as f:
+        data = json.load(f)
+    return tokenizer_from_json(data)
+
