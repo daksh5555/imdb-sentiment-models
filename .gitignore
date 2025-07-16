@@ -1,6 +1,0 @@
-.streamlit/ 
-secrets.toml 
-gcp_credentials.json 
-user_feedback.csv 
-__pycache__/ 
-*.pyc 
